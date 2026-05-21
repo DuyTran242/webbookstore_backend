@@ -1,4 +1,4 @@
-package vn.duyit.webbansach_backend.dto;
+package vn.duyit.webbansach_backend.admin.dto;
 
 import lombok.Data;
 import java.time.LocalDate;

@@ -1,11 +1,11 @@
-package vn.duyit.webbansach_backend.controller;
+package vn.duyit.webbansach_backend.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.duyit.webbansach_backend.dto.AdminAuthResponse;
-import vn.duyit.webbansach_backend.dto.AdminLoginRequest;
-import vn.duyit.webbansach_backend.service.AdminAuthService;
+import vn.duyit.webbansach_backend.admin.dto.AdminAuthResponse;
+import vn.duyit.webbansach_backend.admin.dto.AdminLoginRequest;
+import vn.duyit.webbansach_backend.admin.service.AdminAuthService;
 
 @RestController
 @RequestMapping("/api/admin")

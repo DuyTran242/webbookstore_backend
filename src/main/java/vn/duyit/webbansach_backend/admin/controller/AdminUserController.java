@@ -1,11 +1,11 @@
-package vn.duyit.webbansach_backend.controller;
+package vn.duyit.webbansach_backend.admin.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.duyit.webbansach_backend.dto.UserAdminDTO;
-import vn.duyit.webbansach_backend.service.UserAdminService;
+import vn.duyit.webbansach_backend.admin.dto.AdminUserDTO;
+import vn.duyit.webbansach_backend.admin.service.AdminUserService;
 
 import java.util.Map;
 
@@ -14,41 +14,36 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AdminUserController {
 
-    private final UserAdminService userAdminService;
+    private final AdminUserService adminUserService;
 
-    public UserAdminController(UserAdminService userAdminService) {
-        this.userAdminService = userAdminService;
+    public AdminUserController(AdminUserService adminUserService) {
+        this.adminUserService = adminUserService;
     }
 
-    //    Lấy danh sách user có phân trang + tìm kiếm
-
-    public ResponseEntity<Page<UserAdminDTO>> getAllUsers(
+    @GetMapping
+    public ResponseEntity<Page<AdminUserDTO>> getAllUsers(
             @RequestParam(defaultValue = "0")  int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false)    String keyword
     ) {
-        Page<UserAdminDTO> result = userAdminService.getAllUsers(page, size, keyword);
+        Page<AdminUserDTO> result = adminUserService.getAllUsers(page, size, keyword);
         return ResponseEntity.ok(result);
     }
-
-    //    Xem chi tiết 1 user
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserDetail(@PathVariable Long id) {
         try {
-            UserAdminDTO dto = userAdminService.getUserDetail(id);
+            AdminUserDTO dto = adminUserService.getUserDetail(id);
             return ResponseEntity.ok(dto);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    //    Khóa tài khoản user (status = 2)
-
     @PatchMapping("/{id}/lock")
     public ResponseEntity<?> lockUser(@PathVariable Long id) {
         try {
-            UserAdminDTO dto = userAdminService.lockUser(id);
+            AdminUserDTO dto = adminUserService.lockUser(id);
             return ResponseEntity.ok(Map.of(
                     "message", "Đã khóa tài khoản thành công",
                     "user", dto
@@ -58,12 +53,10 @@ public class AdminUserController {
         }
     }
 
-    //    Mở khóa tài khoản user (status = 1)
-
     @PatchMapping("/{id}/unlock")
     public ResponseEntity<?> unlockUser(@PathVariable Long id) {
         try {
-            UserAdminDTO dto = userAdminService.unlockUser(id);
+            AdminUserDTO dto = adminUserService.unlockUser(id);
             return ResponseEntity.ok(Map.of(
                     "message", "Đã mở khóa tài khoản thành công",
                     "user", dto
