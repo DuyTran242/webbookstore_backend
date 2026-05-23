@@ -1,4 +1,4 @@
-package vn.duyit.webbansach_backend.controller;
+package vn.duyit.webbansach_backend.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

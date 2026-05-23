@@ -1,11 +1,11 @@
-package vn.duyit.webbansach_backend.service;
+package vn.duyit.webbansach_backend.admin.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import vn.duyit.webbansach_backend.dto.UserAdminDTO;
+import vn.duyit.webbansach_backend.admin.dto.AdminUserDTO;
 import vn.duyit.webbansach_backend.entity.User;
 import vn.duyit.webbansach_backend.repository.UserRepository;
 
@@ -14,18 +14,15 @@ public class AdminUserService {
 
     private final UserRepository userRepository;
 
-    public UserAdminService(UserRepository userRepository) {
+    public AdminUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    // 1. LẤY DANH SÁCH USER CÓ PHÂN TRANG + TÌM KIẾM
-   
-    public Page<UserAdminDTO> getAllUsers(int page, int size, String keyword) {
+    public Page<AdminUserDTO> getAllUsers(int page, int size, String keyword) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
         Page<User> userPage;
         if (keyword != null && !keyword.trim().isEmpty()) {
-            // Tìm kiếm theo tên hoặc email
             userPage = userRepository.findByFullNameContainingOrEmailContaining(
                     keyword.trim(), keyword.trim(), pageable
             );
@@ -36,17 +33,13 @@ public class AdminUserService {
         return userPage.map(this::mapToDTO);
     }
 
-    // 2. LẤY CHI TIẾT 1 USER
-
-    public UserAdminDTO getUserDetail(Long id) {
+    public AdminUserDTO getUserDetail(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
         return mapToDTO(user);
     }
 
-    // 3. KHÓA TÀI KHOẢN (status = 2)
-
-    public UserAdminDTO lockUser(Long id) {
+    public AdminUserDTO lockUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
 
@@ -58,9 +51,7 @@ public class AdminUserService {
         return mapToDTO(userRepository.save(user));
     }
 
-    // 4. MỞ KHÓA TÀI KHOẢN (status = 1)
-
-    public UserAdminDTO unlockUser(Long id) {
+    public AdminUserDTO unlockUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với ID: " + id));
 
@@ -72,11 +63,8 @@ public class AdminUserService {
         return mapToDTO(userRepository.save(user));
     }
 
-
-    // HELPER: Map Entity -> DTO (không trả password)
-
-    private UserAdminDTO mapToDTO(User user) {
-        UserAdminDTO dto = new UserAdminDTO();
+    private AdminUserDTO mapToDTO(User user) {
+        AdminUserDTO dto = new AdminUserDTO();
         dto.setId(user.getId());
         dto.setFullName(user.getFullName());
         dto.setEmail(user.getEmail());

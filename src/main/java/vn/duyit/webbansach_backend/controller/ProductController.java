@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import vn.duyit.webbansach_backend.entity.Product;
 import vn.duyit.webbansach_backend.service.ProductService;
 import vn.duyit.webbansach_backend.dto.ProductDetailDTO;
-import vn.duyit.webbansach_backend.dto.ProductDTO;
 
 import java.util.List;
 
@@ -36,25 +35,10 @@ public class ProductController {
         return ResponseEntity.ok(productDetail);
     }
 
-    // 3. FIX LỖI TRÙNG ĐƯỜNG DẪN: API lấy dữ liệu sản phẩm để đưa lên Form Sửa (Admin)
-    // Đổi đường dẫn thành "/admin/{id}" để không trùng với hàm getProduct ở trên
-    @GetMapping("/admin/{id}")
-    public ResponseEntity<ProductDTO> getProductForEdit(@PathVariable Long id) {
-        ProductDTO product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
-    }
-
     // 4. API lấy sản phẩm theo danh mục
     @GetMapping("/category/{categoryId}")
     public List<Product> getByCategory(@PathVariable Long categoryId) {
         return productService.getByCategory(categoryId);
-    }
-
-    // 5. API cập nhật sản phẩm (Dành cho Admin)
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        ProductDTO updatedProduct = productService.updateProduct(id, productDTO);
-        return ResponseEntity.ok(updatedProduct);
     }
 
     // 6. API tìm kiếm sản phẩm theo từ khóa
