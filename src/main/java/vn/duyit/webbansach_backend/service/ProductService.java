@@ -12,7 +12,10 @@ import vn.duyit.webbansach_backend.entity.ProductImage;
 import vn.duyit.webbansach_backend.repository.ProductImageRepository;
 import vn.duyit.webbansach_backend.repository.ProductRepository;
 import vn.duyit.webbansach_backend.dto.ProductDTO;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -217,5 +220,53 @@ public class ProductService {
         }
 
         return dto;
+    }
+    // Phân trang + tìm kiếm sản phẩm (dành cho trang Admin)
+    public Page<ProductDTO> getProductsPaged(int page, int size, String keyword, Long categoryId) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        String kw = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : null;
+
+        Page<Product> productPage = productRepository.searchProducts(kw, categoryId, pageable);
+
+        return productPage.map(p -> {
+            ProductDTO dto = new ProductDTO();
+            dto.setId(p.getId());
+            dto.setName(p.getName());
+            dto.setPrice(p.getPrice());
+            dto.setBrand(p.getBrand());
+            dto.setColor(p.getColor());
+            dto.setDescription(p.getDescription());
+            dto.setMaterial(p.getMaterial());
+            dto.setStockQuantity(p.getStockQuantity());
+            dto.setWeight(p.getWeight());
+            if (p.getCategory() != null) {
+                dto.setCategoryId(p.getCategory().getId());
+            }
+            // Chỉ lấy ảnh chính để giảm tải dữ liệu
+            if (p.getImages() != null) {
+                List<ProductImageDTO> imageDTOs = p.getImages().stream()
+                        .filter(img -> img.getIsPrimary() != null && img.getIsPrimary() == 1)
+                        .map(img -> {
+                            ProductImageDTO imgDto = new ProductImageDTO();
+                            imgDto.setImageUrl(img.getImageUrl());
+                            imgDto.setIsPrimary(img.getIsPrimary());
+                            return imgDto;
+                        }).collect(Collectors.toList());
+                dto.setImages(imageDTOs);
+            }
+            return dto;
+        });
+    }
+
+    // Xóa sản phẩm (xóa cả ảnh liên quan trước)
+    @Transactional
+    public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy sản phẩm với ID: " + id);
+        }
+        // Xóa ảnh trước để tránh lỗi khóa ngoại
+        productImageRepository.deleteByProductId(id);
+        productRepository.deleteById(id);
     }
 }
