@@ -2,6 +2,7 @@ package vn.duyit.webbansach_backend.admin.dto;
 
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class CategoryDTO {
@@ -9,6 +10,8 @@ public class CategoryDTO {
     private String name;
     private String description;
     private Long parentId;
+    private String parentName;      // Tên danh mục cha (để hiển thị)
     private LocalDateTime createdAt;
-    private Long productCount; // Tổng số sách thuộc danh mục này
+    private long productCount;      // Số sách thuộc danh mục này
+    private List<CategoryDTO> children; // Danh mục con (nếu cần tree view)
 }
