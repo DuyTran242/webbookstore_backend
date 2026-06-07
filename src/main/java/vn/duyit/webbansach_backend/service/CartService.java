@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.duyit.webbansach_backend.dto.AddToCartRequest;
+import vn.duyit.webbansach_backend.dto.CartItemResponse;
 import vn.duyit.webbansach_backend.entity.Cart;
 import vn.duyit.webbansach_backend.entity.CartItem;
 import vn.duyit.webbansach_backend.entity.Product;
@@ -12,10 +14,6 @@ import vn.duyit.webbansach_backend.repository.CartItemRepository;
 import vn.duyit.webbansach_backend.repository.CartRepository;
 import vn.duyit.webbansach_backend.repository.ProductRepository;
 import vn.duyit.webbansach_backend.repository.UserRepository;
-
-// Import DTO
-import vn.duyit.webbansach_backend.dto.AddToCartRequest;
-import vn.duyit.webbansach_backend.dto.CartItemResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;

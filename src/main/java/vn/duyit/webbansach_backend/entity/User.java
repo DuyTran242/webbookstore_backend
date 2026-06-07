@@ -3,12 +3,13 @@ package vn.duyit.webbansach_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.time.LocalDate;
 @Entity
 @Table(name = "users")
 @Getter
@@ -74,6 +75,9 @@ public class User {
 
     @Column(name = "otp_expiry_time")
     private LocalDateTime otpExpiryTime;
+    // Thêm vào trong class User.java
+    @Column(name = "isDelete") // Tên cột trong DB của bạn viết thường (theo ảnh)
+    private Integer isDelete;
 
     @ManyToMany
     @JoinTable(

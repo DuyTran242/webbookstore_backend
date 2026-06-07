@@ -1,9 +1,8 @@
 package vn.duyit.webbansach_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity

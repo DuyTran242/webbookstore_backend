@@ -2,22 +2,17 @@ package vn.duyit.webbansach_backend.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.duyit.webbansach_backend.dto.ProductCreateDTO;
-import vn.duyit.webbansach_backend.dto.ProductDetailDTO;
-import vn.duyit.webbansach_backend.dto.ProductImageDTO;
-import vn.duyit.webbansach_backend.dto.ReviewResponseDTO;
+import vn.duyit.webbansach_backend.dto.*;
 import vn.duyit.webbansach_backend.entity.Category;
 import vn.duyit.webbansach_backend.entity.Product;
 import vn.duyit.webbansach_backend.entity.ProductImage;
 import vn.duyit.webbansach_backend.repository.ProductImageRepository;
 import vn.duyit.webbansach_backend.repository.ProductRepository;
-import vn.duyit.webbansach_backend.dto.ProductDTO;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors; // Thêm import này cho hàm map List
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {

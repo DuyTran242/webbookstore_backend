@@ -1,8 +1,11 @@
 package vn.duyit.webbansach_backend.entity;
-import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product_views")

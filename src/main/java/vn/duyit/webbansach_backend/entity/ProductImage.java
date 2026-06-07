@@ -1,7 +1,9 @@
 package vn.duyit.webbansach_backend.entity;
-import jakarta.persistence.*;
-import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @Table(name = "product_images")
 @Getter
