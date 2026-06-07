@@ -1,9 +1,9 @@
-package vn.duyit.webbansach_backend.service;
+package vn.duyit.webbansach_backend.admin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.duyit.webbansach_backend.dto.AdminAuthResponse;
-import vn.duyit.webbansach_backend.dto.AdminLoginRequest;
+import vn.duyit.webbansach_backend.admin.dto.AdminAuthResponse;
+import vn.duyit.webbansach_backend.admin.dto.AdminLoginRequest;
 import vn.duyit.webbansach_backend.entity.Role;
 import vn.duyit.webbansach_backend.entity.User;
 import vn.duyit.webbansach_backend.repository.UserRepository;
