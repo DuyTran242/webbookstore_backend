@@ -1,11 +1,11 @@
 package vn.duyit.webbansach_backend.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity; // BỔ SUNG IMPORT NÀY
 import org.springframework.web.bind.annotation.*;
-import vn.duyit.webbansach_backend.dto.ProductDTO;
-import vn.duyit.webbansach_backend.dto.ProductDetailDTO;
 import vn.duyit.webbansach_backend.entity.Product;
 import vn.duyit.webbansach_backend.service.ProductService;
+import vn.duyit.webbansach_backend.dto.ProductDetailDTO;
+import vn.duyit.webbansach_backend.dto.ProductDTO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package vn.duyit.webbansach_backend.admin.dto;
+package vn.duyit.webbansach_backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

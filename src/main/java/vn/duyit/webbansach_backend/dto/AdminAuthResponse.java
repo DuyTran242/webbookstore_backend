@@ -1,5 +1,4 @@
-package vn.duyit.webbansach_backend.admin.dto;
-
+package vn.duyit.webbansach_backend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,4 +10,6 @@ public class AdminAuthResponse {
     private Long id;
     private String email;
     private String role; // "Admin" hoặc "Staff"
+
+
 }

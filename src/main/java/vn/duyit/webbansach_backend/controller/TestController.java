@@ -1,13 +1,15 @@
 package vn.duyit.webbansach_backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.duyit.webbansach_backend.entity.Product;
-import vn.duyit.webbansach_backend.repository.ProductRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+// Import Repository và Entity từ các package tương ứng của bạn
+import vn.duyit.webbansach_backend.repository.ProductRepository;
+import vn.duyit.webbansach_backend.entity.Product;
 
 @RestController
 @RequestMapping("/test1")

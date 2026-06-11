@@ -1,4 +1,4 @@
-package vn.duyit.webbansach_backend.admin.controller;
+package vn.duyit.webbansach_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 import vn.duyit.webbansach_backend.service.ProductService;
@@ -18,4 +18,5 @@ public class AdminController {
     public void deleteProduct(@PathVariable Long id){
         // productService.deleteProduct(id);
     }
+
 }

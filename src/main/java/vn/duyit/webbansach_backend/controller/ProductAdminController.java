@@ -1,16 +1,15 @@
 package vn.duyit.webbansach_backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import vn.duyit.webbansach_backend.dto.ProductCreateDTO;
 import vn.duyit.webbansach_backend.dto.ProductDTO2;
 import vn.duyit.webbansach_backend.entity.Product;
 import vn.duyit.webbansach_backend.orderinface.ProductService2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import vn.duyit.webbansach_backend.service.ProductService;
-
 import java.util.List;
-
+import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin/products")
 public class ProductAdminController {

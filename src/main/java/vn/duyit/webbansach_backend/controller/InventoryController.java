@@ -2,8 +2,8 @@ package vn.duyit.webbansach_backend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.duyit.webbansach_backend.dto.*;
 import vn.duyit.webbansach_backend.service.SerialAndWarrantyService;
+import vn.duyit.webbansach_backend.dto.*;
 
 @RestController
 @RequestMapping("/api/admin/inventory")
