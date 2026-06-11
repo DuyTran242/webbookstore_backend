@@ -1,12 +1,12 @@
 package vn.duyit.webbansach_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "products")
 @Getter
@@ -45,6 +45,11 @@ public class Product {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "has_serial", columnDefinition = "boolean default false")
+    private Boolean hasSerial;
+
+    @Column(name = "warranty_months")
+    private Integer warrantyMonths;
 
     @OneToMany(mappedBy = "product")
     private List<ProductImage> images;

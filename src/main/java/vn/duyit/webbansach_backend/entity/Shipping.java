@@ -1,10 +1,11 @@
 package vn.duyit.webbansach_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "shipping")
 @Data
