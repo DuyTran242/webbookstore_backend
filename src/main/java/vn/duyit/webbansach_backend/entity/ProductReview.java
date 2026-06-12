@@ -33,4 +33,12 @@ public class ProductReview {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    @JsonIgnore
+    private ProductReview parentReview;
+
+    @OneToMany(mappedBy = "parentReview", cascade = CascadeType.ALL)
+    private java.util.List<ProductReview> replies;
 }

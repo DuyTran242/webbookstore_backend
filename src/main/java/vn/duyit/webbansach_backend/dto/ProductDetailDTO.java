@@ -23,4 +23,6 @@ public class ProductDetailDTO {
     private List<ProductImage> images;
     // Chứa danh sách các review đã được DTO hóa
     private List<ReviewResponseDTO> reviews;
+    private Integer totalReviews;
+    private Double averageRating;
 }

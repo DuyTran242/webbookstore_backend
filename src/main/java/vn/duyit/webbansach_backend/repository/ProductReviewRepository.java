@@ -9,4 +9,11 @@ public interface ProductReviewRepository extends JpaRepository<ProductReview, Lo
 
     List<ProductReview> findByProductId(Long productId);
 
+    List<ProductReview> findByProductIdAndParentReviewIsNullOrderByCreatedAtDesc(Long productId);
+
+    List<ProductReview> findAllByOrderByCreatedAtDesc();
+
+    @org.springframework.data.jpa.repository.Query("SELECT AVG(r.rating) FROM ProductReview r WHERE r.product.id = :productId AND r.parentReview IS NULL")
+    Double getAverageRatingByProductId(@org.springframework.data.repository.query.Param("productId") Long productId);
+
 }

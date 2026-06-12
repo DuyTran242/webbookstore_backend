@@ -10,4 +10,6 @@ public class ReviewRequestDTO {
     private Long userId; // Sẽ null nếu là khách vãng lai
     private Integer rating;
     private String comment;
+    private Long parentId; 
+    private Long reviewId; 
 }

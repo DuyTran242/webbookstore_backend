@@ -69,4 +69,15 @@ public class ProductController {
         Product savedProduct = productService.saveProduct(product);
         return ResponseEntity.ok(savedProduct);
     }
+
+    // 8. API xóa sản phẩm (hoặc ẩn)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Lỗi xóa sản phẩm: " + e.getMessage());
+        }
+    }
 }
