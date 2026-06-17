@@ -27,6 +27,8 @@ public class OrderRequestDTO {
     private BigDecimal totalPrice;
     private String paymentMethod; // "VNPAY" hoặc "COD"
     private Long userId; // ID người dùng nếu đã đăng nhập
+    private String discountCode; // MÃ GIẢM GIÁ
+    private BigDecimal discountAmount; // SỐ TIỀN GIẢM GIÁ
 
     // Danh sách sản phẩm trong đơn hàng (Khớp bảng order_items)
     private List<OrderItemDTO> items;

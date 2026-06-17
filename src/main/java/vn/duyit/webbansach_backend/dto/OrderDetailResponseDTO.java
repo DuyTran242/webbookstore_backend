@@ -12,6 +12,7 @@ public class OrderDetailResponseDTO {
     private LocalDateTime createdAt;
     private BigDecimal totalPrice;
     private BigDecimal shippingFee;
+    private BigDecimal discount;
     private String status;
     private String paymentStatus;
     private String shippingAddress;

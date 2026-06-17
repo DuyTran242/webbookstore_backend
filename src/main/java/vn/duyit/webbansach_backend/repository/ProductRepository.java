@@ -26,6 +26,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Spring Data JPA sẽ tự động build câu query: SELECT * FROM products WHERE has_serial = true
     List<Product> findByHasSerialTrue();
 
+    @Query(value = "SELECT COUNT(*) FROM products WHERE stock_quantity > 0", nativeQuery = true)
+    long countInStockProducts();
+
     // THÊM MỚI: Phân trang + tìm kiếm theo tên hoặc brand
     @Query("SELECT p FROM Product p WHERE " +
             "(:keyword IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +

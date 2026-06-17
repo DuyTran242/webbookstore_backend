@@ -26,10 +26,11 @@ public class OrderService {
     @Autowired private ProductRepository productRepository;
     @Autowired private CartService cartService;
 
-    // THÊM: Inject UserRepository vào đây
     @Autowired private UserRepository userRepository;
     @Autowired
     private ProductImageService productImageService;
+    @Autowired
+    private DiscountCodeService discountCodeService;
 
 
     // Hàm lấy danh sách đơn hàng của người dùng
@@ -56,8 +57,32 @@ public class OrderService {
         order.setPhone(request.getPhone());
         order.setShippingAddress(fullAddress);
         order.setShippingFee(request.getShippingFee());
-        order.setDiscount(BigDecimal.ZERO);
-        order.setTotalPrice(request.getTotalPrice());
+
+        BigDecimal subtotal = BigDecimal.ZERO;
+        if (request.getItems() != null) {
+            for (OrderRequestDTO.OrderItemDTO itemDto : request.getItems()) {
+                subtotal = subtotal.add(itemDto.getPrice().multiply(BigDecimal.valueOf(itemDto.getQuantity())));
+            }
+        }
+
+        BigDecimal discountAmount = BigDecimal.ZERO;
+        if (request.getDiscountCode() != null && !request.getDiscountCode().isEmpty()) {
+            try {
+                discountAmount = discountCodeService.calculateDiscount(request.getDiscountCode(), subtotal);
+                discountCodeService.incrementUsedCount(request.getDiscountCode());
+            } catch (Exception e) {
+                System.out.println("Lỗi áp dụng mã giảm giá: " + e.getMessage());
+            }
+        }
+
+        order.setDiscount(discountAmount);
+        
+        // Recalculate total price to be safe
+        BigDecimal finalTotal = subtotal.add(request.getShippingFee()).subtract(discountAmount);
+        if (finalTotal.compareTo(BigDecimal.ZERO) < 0) {
+            finalTotal = BigDecimal.ZERO;
+        }
+        order.setTotalPrice(finalTotal);
         order.setNote(request.getNote());
         order.setStatus("PENDING");
         order.setPaymentStatus("UNPAID");
@@ -194,6 +219,7 @@ public class OrderService {
         dto.setCreatedAt(order.getCreatedAt());
         dto.setTotalPrice(order.getTotalPrice());
         dto.setShippingFee(order.getShippingFee());
+        dto.setDiscount(order.getDiscount());
         dto.setStatus(order.getStatus());
         dto.setPaymentStatus(order.getPaymentStatus());
         dto.setShippingAddress(order.getShippingAddress());
