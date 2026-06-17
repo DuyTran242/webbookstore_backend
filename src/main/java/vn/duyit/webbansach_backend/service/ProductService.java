@@ -75,9 +75,20 @@ public class ProductService {
         // Convert List<ProductReview> sang List<ReviewResponseDTO>
         if (p.getReviews() != null) {
             List<ReviewResponseDTO> reviewDTOs = p.getReviews().stream()
+                    .filter(r -> r.getParentReview() == null)
+                    .sorted((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()))
                     .map(reviewService::mapToResponseDTO)
                     .toList();
             dto.setReviews(reviewDTOs);
+
+            long total = p.getReviews().stream().filter(r -> r.getParentReview() == null).count();
+            double avg = p.getReviews().stream()
+                    .filter(r -> r.getParentReview() == null && r.getRating() != null && r.getRating() > 0)
+                    .mapToInt(vn.duyit.webbansach_backend.entity.ProductReview::getRating)
+                    .average().orElse(0.0);
+            
+            dto.setTotalReviews((int) total);
+            dto.setAverageRating(Math.round(avg * 10.0) / 10.0);
         }
 
         return dto;
@@ -167,8 +178,6 @@ public class ProductService {
         return dto;
     }
 
-    // 2. Hàm lưu dữ liệu Update
-    @Transactional // Rất quan trọng để rollback nếu lỗi xóa/lưu ảnh
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
@@ -182,6 +191,9 @@ public class ProductService {
         product.setMaterial(dto.getMaterial());
         product.setStockQuantity(dto.getStockQuantity());
         product.setWeight(dto.getWeight());
+        if (dto.getStatus() != null) {
+            product.setStatus(dto.getStatus());
+        }
         product.setUpdatedAt(LocalDateTime.now()); // Cập nhật thời gian sửa
 
         // FIX: Xử lý set lại CategoryId bằng cách tạo object Category
@@ -212,5 +224,17 @@ public class ProductService {
         }
 
         return dto;
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+        try {
+            productRepository.delete(product);
+        } catch (Exception e) {
+            // Nếu lỗi do khoá ngoại, chuyển sang ẩn sản phẩm
+            product.setStatus(0);
+            productRepository.save(product);
+        }
     }
 }

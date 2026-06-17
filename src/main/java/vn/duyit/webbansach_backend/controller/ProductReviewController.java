@@ -19,7 +19,41 @@ public class ProductReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewResponseDTO> addReview(@RequestBody ReviewRequestDTO dto) {
-        ReviewResponseDTO newReview = reviewService.addReview(dto);
-        return ResponseEntity.ok(newReview);
+        try {
+            ReviewResponseDTO newReview = reviewService.addReview(dto);
+            return ResponseEntity.ok(newReview);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editReview(@PathVariable Long id, @RequestBody ReviewRequestDTO dto) {
+        try {
+            ReviewResponseDTO updated = reviewService.editReview(id, dto);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id, @RequestParam Long userId) {
+        try {
+            reviewService.deleteReview(id, userId);
+            return ResponseEntity.ok("Xoá bình luận thành công");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<java.util.List<ReviewResponseDTO>> getAllReviews() {
+        return ResponseEntity.ok(reviewService.getAllReviews());
+    }
+
+    @GetMapping("/check-purchase")
+    public ResponseEntity<Boolean> checkPurchase(@RequestParam Long userId, @RequestParam Long productId) {
+        return ResponseEntity.ok(reviewService.checkPurchase(userId, productId));
     }
 }

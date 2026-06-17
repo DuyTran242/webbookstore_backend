@@ -13,8 +13,12 @@ public class ProductDTO {
     private Integer stockQuantity;
     private Long categoryId;
     private Double weight;
+    private Integer status;
     private List<ProductImageDTO> images;
 
+    private List<ReviewResponseDTO> reviews;
+    private Double averageRating;
+    private Integer totalReviews;
     // Getters and Setters cho tất cả các field trên
     // ...
 

@@ -13,4 +13,6 @@ public class ReviewResponseDTO {
     private Integer rating;
     private String comment;
     private LocalDateTime createdAt;
+    private Long userId;
+    private java.util.List<ReviewResponseDTO> replies;
 }
