@@ -8,4 +8,6 @@ public class StockUpdateDTO {
     private Integer quantity;
     private String type;
     private String note;
+    private Double importPrice;
+    private String supplier;
 }

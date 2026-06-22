@@ -68,4 +68,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<CartItem> cartItems;
+
+    @Column(name = "import_price")
+    private Double importPrice;
+
+    private String supplier;
 }
